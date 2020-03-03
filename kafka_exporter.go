@@ -139,9 +139,9 @@ func NewExporter(opts kafkaOpts, topicFilter string, groupFilter string) (*Expor
 		if opts.saslMechanism != "" {
 			config.Net.SASL.Mechanism = sarama.SASLMechanism(opts.saslMechanism)
 			switch config.Net.SASL.Mechanism {
-			case SASLTypeSCRAMSHA256:
+			case sarama.SASLTypeSCRAMSHA256:
 				config.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient { return &XDGSCRAMClient{HashGeneratorFcn: SHA256} }
-			case SASLTypeSCRAMSHA512:
+			case sarama.SASLTypeSCRAMSHA512:
 				config.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient { return &XDGSCRAMClient{HashGeneratorFcn: SHA512} }
 			}
 		}
