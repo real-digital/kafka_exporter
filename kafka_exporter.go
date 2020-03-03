@@ -66,6 +66,7 @@ type kafkaOpts struct {
 	useSASLHandshake         bool
 	saslUsername             string
 	saslPassword             string
+	saslMechanism            string
 	useTLS                   bool
 	tlsCAFile                string
 	tlsCertFile              string
@@ -133,6 +134,16 @@ func NewExporter(opts kafkaOpts, topicFilter string, groupFilter string) (*Expor
 
 		if opts.saslPassword != "" {
 			config.Net.SASL.Password = opts.saslPassword
+		}
+
+		if opts.saslMechanism != "" {
+			config.Net.SASL.Mechanism = sarama.SASLMechanism(opts.saslMechanism)
+			switch config.Net.SASL.Mechanism {
+			case SASLTypeSCRAMSHA256:
+				config.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient { return &XDGSCRAMClient{HashGeneratorFcn: SHA256} }
+			case SASLTypeSCRAMSHA512:
+				config.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient { return &XDGSCRAMClient{HashGeneratorFcn: SHA512} }
+			}
 		}
 	}
 
@@ -481,6 +492,7 @@ func main() {
 	kingpin.Flag("sasl.handshake", "Only set this to false if using a non-Kafka SASL proxy.").Default("true").BoolVar(&opts.useSASLHandshake)
 	kingpin.Flag("sasl.username", "SASL user name.").Default("").StringVar(&opts.saslUsername)
 	kingpin.Flag("sasl.password", "SASL user password.").Default("").StringVar(&opts.saslPassword)
+	kingpin.Flag("sasl.mechanism", "SASL mechanism. One of PLAIN, OAUTHBEARER, SCRAM-SHA-256, SCRAM-SHA-512").Default("").StringVar(&opts.saslMechanism)
 	kingpin.Flag("tls.enabled", "Connect using TLS.").Default("false").BoolVar(&opts.useTLS)
 	kingpin.Flag("tls.ca-file", "The optional certificate authority file for TLS client authentication.").Default("").StringVar(&opts.tlsCAFile)
 	kingpin.Flag("tls.cert-file", "The optional certificate file for client authentication.").Default("").StringVar(&opts.tlsCertFile)
