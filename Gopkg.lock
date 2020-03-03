@@ -229,6 +229,22 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:ad74f33a69bd6ab0bd7287003b7c1069b94cfb5213eb5597005fe2963d7dfca9"
+  name = "github.com/xdg/scram"
+  packages = ["."]
+  pruneopts = ""
+  revision = "7eeb5667e42c09cb51bf7b7c28aea8c56767da90"
+
+[[projects]]
+  digest = "1:d110a69f3fba1632d3a543ebfbf9a62ea59bd2cf0c34608975d7e2c761c10edc"
+  name = "github.com/xdg/stringprep"
+  packages = ["."]
+  pruneopts = ""
+  revision = "bd625b8dc1e3b0f57412280ccbcc317f0c69d8db"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
   digest = "1:a5ecec7a7007b0af5622967f39375001299ca9559c8028617bbf846ac37bb398"
   name = "golang.org/x/crypto"
   packages = [
@@ -261,6 +277,21 @@
   ]
   pruneopts = ""
   revision = "5c8b2ff67527cb88b770f693cebf3799036d8bc0"
+
+[[projects]]
+  digest = "1:740b51a55815493a8d0f2b1e0d0ae48fe48953bf7eaf3fcc4198823bf67768c0"
+  name = "golang.org/x/text"
+  packages = [
+    "internal/gen",
+    "internal/triegen",
+    "internal/ucd",
+    "transform",
+    "unicode/cldr",
+    "unicode/norm"
+  ]
+  pruneopts = ""
+  revision = "342b2e1fbaa52c93f31447ad2c6abc048c63e475"
+  version = "v0.3.2"
 
 [[projects]]
   digest = "1:15d017551627c8bb091bde628215b2861bed128855343fdd570c62d08871f6e1"
@@ -347,6 +378,7 @@
     "github.com/prometheus/common/log",
     "github.com/prometheus/common/version",
     "github.com/rcrowley/go-metrics",
+    "github.com/xdg/scram",
     "gopkg.in/alecthomas/kingpin.v2"
   ]
   solver-name = "gps-cdcl"
